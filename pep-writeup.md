@@ -1,10 +1,11 @@
-## Rebuilding an Imperatively-Coded Game from Scratch in React
+# Rebuilding an Imperatively-Coded Game from Scratch in React
 
 If you’re anything like me, you have at least one fun side project written when you were green enough around the ears to have coded it imperatively. When I joined Fullstack Academy in 2020, I had just written a recipe management tool for bread bakers (check it out! breadbakersfriend.com), and knowing exactly zilch about frameworks, I built my next webapp -- a guessing game played on a 10 x 10 grid of numbers between 1 and 100 -- with all my new imperative tricks.
 
 While the game logic could definitely stand a refactor, the game mechanics -- everything that you could pin down as a response to a user interaction -- this is where the real benefit of a (_insert sunglasses meme_) React-ive framework will make itself known.
 
-Tell me what you want (what you really, really want)
+## Tell me what you want (what you really, really want)
+
 The tough part about imperative programming is that you have to exhaustively document the steps it takes to bring about an effect. React frees up mental resources by allowing you to describe what you want to happen, rather than how you want it to happen. Here’s a concrete example of just how much space for thought React will give you when you turn over micromanagement of the DOM. In the guessing game we’ll be refactoring, take a look at how the grid is built in imperative style.
 
 First, we build an “odd row” template that we’ll fill with numbers, ex. the first row of our grid. (I built an “even row” as well, which I’ll leave to your imagination…)
