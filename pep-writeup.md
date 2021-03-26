@@ -235,4 +235,6 @@ This fourth `handleClick` check is particularly and problematically complicated 
 
 5. If the user has pressed the “get a hint” button, we first check for max difficulty level (jedi) and return a special player message to let the user know that no hints are given at max difficulty. We then give a separate message to users who are on any level easier than max difficulty if there is one guess remaining. If more than one guess remains, prior hints are cleared, new hints are generated, and a `null` value is pushed to an array that tracks user guesses. (This serves two purposes: we inform the user of a repeat guessed value, which will not count against their score, and we track the number of guesses as a function of the guesses array length.) Finally, we let the user know whether they’ve lost and reveal the winning node if they have.
 
-6. If we made it this far, the player pressed the “play again” button, and we reset state to begin a new game.
+If we made it this far ...
+
+6. the player pressed the “play again” button, and we reset state to begin a new game.
