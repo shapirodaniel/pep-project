@@ -1,8 +1,6 @@
 # Rebuilding an Imperatively-Coded Game from Scratch in React
 
-The game we'll be (re)-building!
-
-[The Guessing Game](https://shapirodaniel.github.io/guessing-game)
+The game we'll be (re)-building! [The Guessing Game](https://shapirodaniel.github.io/guessing-game)
 
 If you’re anything like me, you have at least one fun side project written when you were green enough around the ears to have coded it imperatively. When I joined Fullstack Academy in 2020, I had just written a recipe management tool for bread bakers (check it out! breadbakersfriend.com), and knowing exactly zilch about frameworks, I built my next webapp -- a guessing game played on a 10 x 10 grid of numbers between 1 and 100 -- with all my new imperative tricks.
 
