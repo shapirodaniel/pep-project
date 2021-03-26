@@ -55,7 +55,7 @@ assignNodeVals() {
 }
 ```
 
-In React, we are encouraged to think of the operations that conspire to create a new DOM object as a list of instructions detailing what we’d like to see. Translating our imperatively-coded playing field into a functionally-oriented React component, we might end up with something like this -- first, a subcomponent named Row that renders a single row of a checkerboard pattern.
+In React, we are encouraged to think of the operations that conspire to create a new DOM object as a list of instructions detailing what we’d like to see. Translating our imperatively-coded playing field into a functionally-oriented React component, we might end up with something like this -- first, a subcomponent named `Row` that renders a single row of a checkerboard pattern.
 
 ```javascript
 const Row = ({ scalar }) => {
@@ -84,7 +84,7 @@ const Row = ({ scalar }) => {
 };
 ```
 
-Next, we create a PlayingField component that will map a list of “scalars” -- these are the numbers we want each row to start from -- and pass the scalar to the Row subcomponent.
+Next, we create a `PlayingField` component that will map a list of “scalars” -- these are the numbers we want each row to start from -- and pass the scalar to the `Row` subcomponent.
 
 ```javascript
 const PlayingField = () => {
@@ -106,7 +106,7 @@ The benefits of writing functional React components rather than imperative code 
 
 React really shines when it comes to state management -- keeping track of all the values that add up to a “situation” the user has found themselves in, in the midst of using our app or in this particular case, playing our guessing game. Bacon’s aphorism lets us know why: state is a sprawling affair that crawls and branches in many directions from the moment the user loads our app, and to cover every case that could crop up in state imperatively is tantamount to the spinning plates trick -- to avoid a pile of broken ceramics, each event has to be handled precisely in sequence.
 
-The likeliest candidate to benefit from a React refactor in our game’s codebase is a monolithic function that handles all click events:
+The likeliest candidate to benefit from a React refactor in our game’s codebase is a monolithic function `clickHandler` that handles all click events:
 
 ```javascript
 function clickHandler(e) {
@@ -227,12 +227,12 @@ This function performs several side effects:
 
 At this point, since we’ve eliminated the possibility of the user having selected either a game level or a play again, we check for other sorts of selections, starting with a playing field square or “game node” first:
 
-3. If a game node was selected, we assign it the currentChoice selector and assign the userGuess field’s innerText value to the game node’s innerText value
+3. If a game node was selected, we assign it the `currentChoice` selector and assign the `userGuess` field’s innerText value to the game node’s innerText value
 
-4. Otherwise, we check if the user has selected the “submit guess” button, send the userGuess value to a validator function playersGuessSubmission(num) that calls a reducer function checkGuess() that returns an outcome given to a playerMessage node, updates remaining guesses, and clears hints
+4. Otherwise, we check if the user has selected the “submit guess” button, send the `userGuess` value to a validator function `playersGuessSubmission(num)` that calls a reducer function `checkGuess()` that returns an outcome given to a `playerMessage` node, updates remaining guesses, and clears hints
 
-This fourth handleClick check is particularly and problematically complicated -- this sequence of events leads to at least 3 distinct side effects that are increasingly remote from the immediate effect of pressing the submit button (which is, of course, to submit a user guess). And, we’re not done yet -- we haven’t handled the “hint” functionality! This fifth handleClick check really takes the cake:
+This fourth `handleClick` check is particularly and problematically complicated -- this sequence of events leads to at least 3 distinct side effects that are increasingly remote from the immediate effect of pressing the submit button (which is, of course, to submit a user guess). And, we’re not done yet -- we haven’t handled the “hint” functionality! This fifth `handleClick` check really takes the cake:
 
-5. If the user has pressed the “get a hint” button, we first check for max difficulty level (jedi) and return a special player message to let the user know that no hints are given at max difficulty. We then give a separate message to users who are on any level easier than max difficulty if there is one guess remaining. If more than one guess remains, prior hints are cleared, new hints are generated, and a null value is pushed to an array that tracks user guesses. (This serves two purposes: we inform the user of a repeat guessed value, which will not count against their score, and we track the number of guesses as a function of the guesses array length.) Finally, we let the user know whether they’ve lost and reveal the winning node if they have.
+5. If the user has pressed the “get a hint” button, we first check for max difficulty level (jedi) and return a special player message to let the user know that no hints are given at max difficulty. We then give a separate message to users who are on any level easier than max difficulty if there is one guess remaining. If more than one guess remains, prior hints are cleared, new hints are generated, and a `null` value is pushed to an array that tracks user guesses. (This serves two purposes: we inform the user of a repeat guessed value, which will not count against their score, and we track the number of guesses as a function of the guesses array length.) Finally, we let the user know whether they’ve lost and reveal the winning node if they have.
 
 6. If we made it this far, the player pressed the “play again” button, and we reset state to begin a new game.
