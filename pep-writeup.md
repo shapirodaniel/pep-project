@@ -10,24 +10,28 @@ The tough part about imperative programming is that you have to exhaustively doc
 
 First, we build an “odd row” template that we’ll fill with numbers, ex. the first row of our grid. (I built an “even row” as well, which I’ll leave to your imagination…)
 
+```html
 <!-- hidden odd-row template -->
 <div class="odd-row template">
-  <span class="lightSquare"></span>
-  <span class="darkSquare"></span>
-  <span class="lightSquare"></span>
-  <span class="darkSquare"></span>
-  <span class="lightSquare"></span>
-  <span class="darkSquare"></span>
-  <span class="lightSquare"></span>
-  <span class="darkSquare"></span>
-  <span class="lightSquare"></span>
-  <span class="darkSquare"></span>
+	<span class="lightSquare"></span>
+	<span class="darkSquare"></span>
+	<span class="lightSquare"></span>
+	<span class="darkSquare"></span>
+	<span class="lightSquare"></span>
+	<span class="darkSquare"></span>
+	<span class="lightSquare"></span>
+	<span class="darkSquare"></span>
+	<span class="lightSquare"></span>
+	<span class="darkSquare"></span>
 </div>
+```
 
 Next we specify a “playing field”. If you’ve spent any time with React, this strategy mirrors the framework’s approach to rendering your app from a “root” div.
 
+```html
 <!-- playing field -->
 <div class="playing-field"></div>
+```
 
 Finally, in our Game class, we call buildPlayingField() to construct our grid, and assignNodeVals() to assign each a number from 1 to 100.
 
