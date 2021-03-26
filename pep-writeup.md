@@ -33,7 +33,7 @@ Next we specify a “playing field”. If you’ve spent any time with React, th
 <div class="playing-field"></div>
 ```
 
-Finally, in our Game class, we call buildPlayingField() to construct our grid, and assignNodeVals() to assign each a number from 1 to 100.
+Finally, in our Game class, we call `buildPlayingField()` to construct our grid, and `assignNodeVals()` to assign each a number from 1 to 100.
 
 ```javascript
 buildPlayingField() {
