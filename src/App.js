@@ -1,5 +1,7 @@
 import './App.css';
 import PlayingField from './PlayingField';
+import Stats from './Stats';
+import Sidebar from './Sidebar';
 
 function App() {
 	return (
@@ -10,7 +12,9 @@ function App() {
 						THE <span className='h1-emphasis'>GUESSING</span> GAME
 					</h1>
 					<PlayingField />
+					<Stats />
 				</div>
+				<Sidebar />
 			</div>
 		</div>
 	);
