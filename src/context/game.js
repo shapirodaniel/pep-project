@@ -35,11 +35,11 @@ const GameProvider = ({ children }) => {
 
 	const [winningNumber, setWinningNumber] = useState(0);
 	const [selectedSquare, setSelectedSquare] = useState(0);
-	const [currentDifficulty, setCurrentDifficulty] = useState(
-		difficulties.EASY
+	const [currentDifficulty, setCurrentDifficulty] = useState(diff =>
+		diff ? difficulties[diff] : 'EASY'
 	);
 	const [maxGuesses, setMaxGuesses] = useState(() => currentDifficulty);
-	const [numHints, setNumHints] = useState(() => currentDifficulty);
+	const [numHints, setNumHints] = useState(currentDifficulty);
 	const [currentHints, setCurrentHints] = useState([]);
 	const [pastGuesses, setPastGuesses] = useState([]);
 	const [currentProgress, setCurrentProgress] = useState(progresses.PLAYING);
