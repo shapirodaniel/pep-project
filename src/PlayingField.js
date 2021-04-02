@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from './context/game';
 
 const Row = ({ scalar }) => {
+	const { selectedSquare, setSelectedSquare } = useContext(GameContext);
+
+	const chooseSquare = val => {
+		setSelectedSquare(val);
+	};
+
 	const pattern = () => {
 		return (scalar / 10) % 2 === 0
 			? ['lightSquare', 'darkSquare']
@@ -12,12 +19,20 @@ const Row = ({ scalar }) => {
 			{new Array(10).fill(null).map((empty, idx) => {
 				const [oddSquare, evenSquare] = pattern();
 
+				const squareValue = idx + 1 + scalar;
+
 				return (
 					<span
 						key={idx}
-						className={idx % 2 === 0 ? oddSquare : evenSquare}
+						className={
+							(idx % 2 === 0 ? oddSquare : evenSquare) +
+							(selectedSquare === squareValue
+								? ' currentChoice'
+								: '')
+						}
+						onClick={e => chooseSquare(+e.target.innerText)}
 					>
-						{idx + 1 + scalar}
+						{squareValue}
 					</span>
 				);
 			})}
