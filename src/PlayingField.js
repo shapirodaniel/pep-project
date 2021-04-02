@@ -29,7 +29,7 @@ const PlayingField = () => {
 	const scalars = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
 
 	return (
-		<div className='playingField'>
+		<div className='playing-field'>
 			{scalars.map(scalar => (
 				<Row key={scalar} scalar={scalar} />
 			))}
