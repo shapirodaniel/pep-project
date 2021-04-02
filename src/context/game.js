@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-const GameContext = React.createContext();
+export const GameContext = React.createContext();
 
 const GameProvider = ({ children }) => {
 	const difficulties = {
-		EASY: 'easy',
-		MEDIUM: 'medium',
-		HARD: 'hard',
-		EXPERT: 'expert',
-		JEDI: 'jedi',
+		EASY: 'EASY',
+		MEDIUM: 'MEDIUM',
+		HARD: 'HARD',
+		EXPERT: 'EXPERT',
+		JEDI: 'JEDI',
 	};
 
 	const hints = {

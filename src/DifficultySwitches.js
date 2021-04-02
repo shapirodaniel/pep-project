@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from './context/game';
 
 const DifficultySwitch = ({ level, isActive = false }) => {
 	return (
@@ -11,10 +12,12 @@ const DifficultySwitch = ({ level, isActive = false }) => {
 	);
 };
 
-const DifficultySwitches = ({ levels }) => {
-	return levels.map(({ id, level }) => (
-		<DifficultySwitch key={id} level={level} />
-	));
+const DifficultySwitches = () => {
+	const { difficulties } = useContext(GameContext);
+
+	const levels = Object.keys(difficulties);
+
+	return levels.map(level => <DifficultySwitch key={level} level={level} />);
 };
 
 export default DifficultySwitches;
