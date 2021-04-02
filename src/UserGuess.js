@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from './context/game';
 
-const UserGuess = ({ userGuess }) => {
+const UserGuess = () => {
+	const { selectedSquare } = useContext(GameContext);
+
 	return (
 		<div className='guess-wrapper'>
 			<label htmlFor='user-guess'>Your Guess:</label>
-			<div className='user-guess'>{userGuess}</div>
+			<div className='user-guess'>
+				{!selectedSquare ? '' : selectedSquare}
+			</div>
 		</div>
 	);
 };

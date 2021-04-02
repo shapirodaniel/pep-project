@@ -27,6 +27,12 @@ const GameProvider = ({ children }) => {
 		JEDI: 1,
 	};
 
+	const progresses = {
+		PLAYING: 'PLAYING',
+		WON: 'WON',
+		LOST: 'LOST',
+	};
+
 	const [winningNumber, setWinningNumber] = useState(0);
 	const [selectedSquare, setSelectedSquare] = useState(0);
 	const [currentDifficulty, setCurrentDifficulty] = useState(
@@ -34,7 +40,9 @@ const GameProvider = ({ children }) => {
 	);
 	const [maxGuesses, setMaxGuesses] = useState(() => currentDifficulty);
 	const [numHints, setNumHints] = useState(() => currentDifficulty);
+	const [currentHints, setCurrentHints] = useState([]);
 	const [pastGuesses, setPastGuesses] = useState([]);
+	const [currentProgress, setCurrentProgress] = useState(progresses.PLAYING);
 
 	const getWinningNumber = () =>
 		setWinningNumber(Math.ceil(Math.random() * 100));
@@ -56,6 +64,9 @@ const GameProvider = ({ children }) => {
 		setNumHints,
 		pastGuesses,
 		setPastGuesses,
+		currentProgress,
+		progresses,
+		setCurrentProgress,
 		difficulties,
 		getWinningNumber,
 		getNumHints,

@@ -4,10 +4,6 @@ import { GameContext } from './context/game';
 const Row = ({ scalar }) => {
 	const { selectedSquare, setSelectedSquare } = useContext(GameContext);
 
-	const chooseSquare = val => {
-		setSelectedSquare(val);
-	};
-
 	const pattern = () => {
 		return (scalar / 10) % 2 === 0
 			? ['lightSquare', 'darkSquare']
@@ -30,7 +26,7 @@ const Row = ({ scalar }) => {
 								? ' currentChoice'
 								: '')
 						}
-						onClick={e => chooseSquare(+e.target.innerText)}
+						onClick={e => setSelectedSquare(+e.target.innerText)}
 					>
 						{squareValue}
 					</span>
