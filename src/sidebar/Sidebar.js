@@ -1,7 +1,5 @@
 import React from 'react';
-import PlayerInfoWrapper from './PlayerInfoWrapper';
-import PlayerButtons from './PlayerButtons';
-import DifficultySwitches from './DifficultySwitches';
+import { PlayerInfoWrapper, PlayerButtons, DifficultySwitches } from './';
 
 const Sidebar = () => {
 	return (

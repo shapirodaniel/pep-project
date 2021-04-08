@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { GameContext } from './context/game';
+import { GameContext } from '../context/game';
 
 const RemainingGuesses = () => {
 	const { state } = useContext(GameContext);

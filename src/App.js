@@ -1,7 +1,7 @@
 import './App.css';
-import PlayingField from './PlayingField';
-import Stats from './Stats';
-import Sidebar from './Sidebar';
+import PlayingField from './playing-field/PlayingField';
+import { Stats } from './stats';
+import { Sidebar } from './sidebar';
 import GameProvider from './context/game';
 
 function App() {

@@ -1,8 +1,7 @@
 import React from 'react';
-import RemainingGuesses from './RemainingGuesses';
-import Winstreak from './Winstreak';
+import { RemainingGuesses, Winstreak } from './';
 
-const Stats = ({ remainingGuesses, winstreak }) => {
+const Stats = () => {
 	return (
 		<div className='stats'>
 			<RemainingGuesses />

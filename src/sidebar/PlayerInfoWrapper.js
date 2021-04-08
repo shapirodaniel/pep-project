@@ -1,6 +1,5 @@
 import React from 'react';
-import UserGuess from './UserGuess';
-import PlayerMessage from './PlayerMessage';
+import { UserGuess, PlayerMessage } from './';
 
 const PlayerInfoWrapper = () => {
 	return (
