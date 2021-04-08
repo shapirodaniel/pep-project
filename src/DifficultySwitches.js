@@ -2,16 +2,20 @@ import React, { useContext } from 'react';
 import { GameContext } from './context/game';
 
 const DifficultySwitch = ({ level }) => {
-	const { currentDifficulty, setCurrentDifficulty } = useContext(GameContext);
+	const { state, dispatch, START_GAME } = useContext(GameContext);
 
 	return (
 		<div
 			className='difficulty-switch-box'
-			onClick={() => setCurrentDifficulty(level)}
+			onClick={() =>
+				dispatch({ ...state, difficulty: level, type: START_GAME })
+			}
 		>
 			<div
 				className={
-					currentDifficulty === level ? 'checkbox active' : 'checkbox'
+					state && state.difficulty === level
+						? 'checkbox active'
+						: 'checkbox'
 				}
 			>
 				<div className='checkmark'></div>

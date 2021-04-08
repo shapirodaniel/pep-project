@@ -3,15 +3,14 @@ import { GameContext } from './context/game';
 
 const PlayerButtons = () => {
 	const {
-		winningNumber,
-		setWinningNumber,
-		selectedSquare,
-		progresses,
-		currentDifficulty,
-		currentProgress,
-		setCurrentProgress,
+		state,
 		dispatch,
+		START_GAME,
+		PLAYER_GUESSED,
+		PLAYER_REQUESTED_HINT,
 	} = useContext(GameContext);
+
+	const { selectedSquare } = state || {};
 
 	// take in a progress string ('PLAYING', 'WON', 'LOST')
 	// set values on GameContext according to progress

@@ -1,4 +1,5 @@
-import React, { useState, useReducer } from 'react';
+/* eslint-disable default-case */
+import React, { useReducer } from 'react';
 
 export const GameContext = React.createContext();
 
@@ -42,29 +43,49 @@ const playerMessagesLib = {
 	ICE_COLD: "You're ice cold!",
 	JEDI_HINT: 'Reach out with your feelings ...',
 	CLEAR_MESSAGE: '',
+	START_MESSAGE: 'Good luck!',
+	NOT_ENOUGH_GUESSES_LEFT: 'Not enough guesses left to hint...go for it!',
 };
 
 const initState = {
 	difficulty: '',
 	pastGuesses: [],
-	winningNumber: Math.ceil(Math.random() * 100),
+	winningNumber: 0,
 	currentHints: [],
 	maxGuesses: 0,
 	numHints: 0,
 	selectedSquare: 0,
-	currentProgress: '',
-	playerMessage: '',
+	currentProgress: progressesLib.PLAYING,
+	playerMessage: playerMessagesLib.START_MESSAGE,
 };
 
 const START_GAME = 'START_GAME';
 const PLAYER_GUESSED = 'PLAYER_GUESSED';
 const PLAYER_REQUESTED_HINT = 'PLAYER_REQUESTED_HINT';
 
+const getPlayerMessage = (guess, winner) => {
+	if (guess === winner) return playerMessagesLib.YOU_WIN;
+
+	const diff = Math.abs(guess - winner);
+
+	switch (true) {
+		case diff < 10:
+			return playerMessagesLib.BURNING_UP;
+		case diff < 25:
+			return playerMessagesLib.LUKEWARM;
+		case diff < 50:
+			return playerMessagesLib.BIT_CHILLY;
+		case diff < 100:
+			return playerMessagesLib.ICE_COLD;
+	}
+};
+
 const reducer = (state = initState, { type, payload }) => {
 	switch (type) {
+		// payload: { difficulty: /* the current difficulty constant */}
 		case START_GAME: {
 			return {
-				...state,
+				...initState,
 				difficulty: payload.difficulty,
 				winningNumber: Math.ceil(Math.random() * 100),
 				maxGuesses: guessesLib[payload.difficulty],
@@ -75,7 +96,7 @@ const reducer = (state = initState, { type, payload }) => {
 
 		case PLAYER_GUESSED: {
 			// if player has won
-			if (payload.selectedSquare === payload.winningNumber) {
+			if (payload.selectedSquare === state.winningNumber) {
 				return {
 					...state,
 					currentProgress: progressesLib.WON,
@@ -83,10 +104,21 @@ const reducer = (state = initState, { type, payload }) => {
 				};
 			}
 
+			// if player has already made that guess
+			if (state.pastGuesses.includes(payload.selectedSquare))
+				return {
+					...state,
+					playerMessage: playerMessagesLib.ALREADY_GUESSED,
+				};
+
 			// otherwise process
 			const newState = {
 				...state,
-				pastGuesses: [...payload.pastGuesses, payload.selectedSquare],
+				pastGuesses: [...state.pastGuesses, payload.selectedSquare],
+				playerMessage: getPlayerMessage(
+					payload.selectedSquare,
+					state.winningNumber
+				),
 			};
 
 			// if lost
@@ -99,7 +131,10 @@ const reducer = (state = initState, { type, payload }) => {
 			}
 
 			// otherwise, keep playing
-			return newState;
+			return {
+				...newState,
+				playerMessage: playerMessagesLib.CLEAR_MESSAGE,
+			};
 		}
 
 		case PLAYER_REQUESTED_HINT: {
@@ -115,7 +150,7 @@ const reducer = (state = initState, { type, payload }) => {
 			if (state.maxGuesses - payload.pastGuesses.length === 1) {
 				return {
 					...state,
-					playerMessage: playerMessagesLib.YOU_LOSE,
+					playerMessage: playerMessagesLib.NOT_ENOUGH_GUESSES_LEFT,
 				};
 			}
 
@@ -147,9 +182,10 @@ const GameProvider = ({ children }) => {
 	const providerValue = {
 		state,
 		dispatch,
-		PLAYER_GUESSED: PLAYER_GUESSED,
-		PLAYER_REQUESTED_HINT: PLAYER_REQUESTED_HINT,
-		START_GAME: START_GAME,
+		difficultiesLib,
+		PLAYER_GUESSED,
+		PLAYER_REQUESTED_HINT,
+		START_GAME,
 	};
 
 	return (
