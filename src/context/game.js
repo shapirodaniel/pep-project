@@ -58,7 +58,7 @@ const initState = {
 	selectedSquare: 0,
 	currentProgress: progressesLib.PLAYING,
 	playerMessage: playerMessagesLib.START_MESSAGE,
-	currentWinstreak: 0,
+	currentWinstreak: localStorage.getItem('winstreak') || 0,
 };
 
 const START_GAME = 'START_GAME';
@@ -124,14 +124,16 @@ const reducer = (state, { type, payload }) => {
 
 			// if player has won
 			if (payload.selectedSquare === state.winningNumber) {
-				localStorage.setItem('winstreak', ++state.currentWinstreak);
-
-				return {
+				const newState = {
 					...state,
 					currentProgress: progressesLib.WON,
 					playerMessage: playerMessagesLib.YOU_WIN,
-					currentWinstreak: localStorage.getItem('winstreak'),
+					currentWinstreak: state.currentWinstreak++,
 				};
+
+				localStorage.setItem('winstreak', newState.currentWinstreak);
+
+				return newState;
 			}
 
 			// otherwise process
