@@ -24,6 +24,8 @@ const Row = ({ scalar }) => {
 							(idx % 2 === 0 ? oddSquare : evenSquare) +
 							(state.selectedSquare === squareValue
 								? ' currentChoice'
+								: state.currentHints.includes(squareValue)
+								? ' hint'
 								: '')
 						}
 						onClick={e => {

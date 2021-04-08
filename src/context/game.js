@@ -83,6 +83,23 @@ const getPlayerMessage = (guess, winner) => {
 	}
 };
 
+const getNewHints = (level, winner) => {
+	let res = [];
+
+	const generateHint = () => Math.ceil(Math.random() * 100);
+
+	while (res.length < level - 1) {
+		let hint = generateHint();
+		while (res.includes(hint)) hint = generateHint();
+
+		res.push(hint);
+	}
+
+	res.push(winner);
+
+	return res;
+};
+
 const reducer = (state, { type, payload }) => {
 	switch (type) {
 		// payload: { difficulty: /* the current difficulty constant */}
@@ -179,18 +196,13 @@ const reducer = (state, { type, payload }) => {
 				};
 			}
 
-			// otherwise, generate new hints
-			let newHints = new Array(hintsLib[state.difficulty])
-				.fill(null)
-				.map(() => Math.ceil(Math.random() * 100));
-
-			// include the winning number if not already present
-			if (!newHints.includes(state.winningNumber))
-				newHints[0] = state.winningNumber;
-
+			// otherwise, get new hints
 			return {
 				...state,
-				currentHints: newHints,
+				currentHints: getNewHints(
+					hintsLib[state.difficulty],
+					state.winningNumber
+				),
 				playerMessage: playerMessagesLib.CLEAR_MESSAGE,
 				pastGuesses: [...state.pastGuesses, null],
 			};
