@@ -51,7 +51,7 @@ const playerMessagesLib = {
 const initState = {
 	difficulty: 'EASY',
 	pastGuesses: [],
-	winningNumber: 0,
+	winningNumber: Math.ceil(Math.random() * 100),
 	currentHints: [],
 	maxGuesses: 5,
 	numHints: 5,
@@ -178,7 +178,7 @@ const reducer = (state, { type, payload }) => {
 			}
 
 			// otherwise, generate new hints
-			let newHints = new Array(difficultiesLib[state.difficulty])
+			let newHints = new Array(hintsLib[state.difficulty])
 				.fill(null)
 				.map(() => Math.ceil(Math.random() * 100));
 

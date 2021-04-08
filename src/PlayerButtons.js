@@ -13,6 +13,8 @@ const PlayerButtons = () => {
 
 	const { selectedSquare } = state || {};
 
+	console.log(state);
+
 	return (
 		<div className='button-wrapper'>
 			<input
