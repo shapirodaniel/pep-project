@@ -3,14 +3,6 @@ import PlayerInfoWrapper from './PlayerInfoWrapper';
 import PlayerButtons from './PlayerButtons';
 import DifficultySwitches from './DifficultySwitches';
 
-const levels = [
-	{ id: 1, level: 'easy' },
-	{ id: 1, level: 'medium' },
-	{ id: 1, level: 'hard' },
-	{ id: 1, level: 'expert' },
-	{ id: 1, level: 'jedi' },
-];
-
 const Sidebar = () => {
 	return (
 		<div className='sidebar'>
@@ -19,7 +11,7 @@ const Sidebar = () => {
 				<PlayerButtons />
 			</div>
 			<div className='difficulty-wrapper'>
-				<DifficultySwitches levels={levels} />
+				<DifficultySwitches />
 			</div>
 		</div>
 	);

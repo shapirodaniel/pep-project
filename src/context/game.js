@@ -45,6 +45,7 @@ const playerMessagesLib = {
 	CLEAR_MESSAGE: '',
 	START_MESSAGE: 'Good luck!',
 	NOT_ENOUGH_GUESSES_LEFT: 'Not enough guesses left to hint...go for it!',
+	PLEASE_CHOOSE_A_SQUARE: 'Select a square and resubmit!',
 };
 
 const initState = {
@@ -107,6 +108,20 @@ const reducer = (state, { type, payload }) => {
 		}
 
 		case PLAYER_GUESSED: {
+			// if player has not selected a square before clicking submit guess btn
+			if (!payload.selectedSquare)
+				return {
+					...state,
+					playerMessage: playerMessagesLib.PLEASE_CHOOSE_A_SQUARE,
+				};
+
+			// if player has already made that guess
+			if (state.pastGuesses.includes(payload.selectedSquare))
+				return {
+					...state,
+					playerMessage: playerMessagesLib.ALREADY_GUESSED,
+				};
+
 			// if player has won
 			if (payload.selectedSquare === state.winningNumber) {
 				localStorage.setItem('winstreak', ++state.currentWinstreak);
@@ -118,13 +133,6 @@ const reducer = (state, { type, payload }) => {
 					currentWinstreak: localStorage.getItem('winstreak'),
 				};
 			}
-
-			// if player has already made that guess
-			if (state.pastGuesses.includes(payload.selectedSquare))
-				return {
-					...state,
-					playerMessage: playerMessagesLib.ALREADY_GUESSED,
-				};
 
 			// otherwise process
 			const newState = {
