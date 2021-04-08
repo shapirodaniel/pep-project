@@ -22,9 +22,9 @@ const DifficultySwitch = ({ level }) => {
 };
 
 const DifficultySwitches = () => {
-	const { difficulties } = useContext(GameContext);
+	const { difficultiesLib } = useContext(GameContext);
 
-	const levels = Object.keys(difficulties);
+	const levels = Object.keys(difficultiesLib);
 
 	return levels.map(level => <DifficultySwitch key={level} level={level} />);
 };

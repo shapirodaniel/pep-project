@@ -7,13 +7,17 @@ const PlayerButtons = () => {
 		setWinningNumber,
 		selectedSquare,
 		progresses,
+		currentDifficulty,
 		currentProgress,
 		setCurrentProgress,
+		dispatch,
 	} = useContext(GameContext);
 
 	// take in a progress string ('PLAYING', 'WON', 'LOST')
 	// set values on GameContext according to progress
-	const setGameState = () => {};
+	const setGameState = selected => {
+		dispatch(selected);
+	};
 
 	return (
 		<div className='button-wrapper'>
@@ -21,13 +25,7 @@ const PlayerButtons = () => {
 				type='button'
 				id='submit-guess-btn'
 				value='SUBMIT GUESS'
-				onClick={() => {
-					// grab useReducer
-					// set up a game state reducer based on selection,
-					// number of guesses, hints, etc.
-					// return a progress string to use here
-					setGameState(/* progress string */);
-				}}
+				onClick={() => setGameState(selectedSquare)}
 			/>
 			<input type='button' id='hint-btn' value='GET A HINT' />
 			<input type='button' id='play-again-btn' value='PLAY AGAIN' />
