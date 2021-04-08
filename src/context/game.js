@@ -195,12 +195,16 @@ const reducer = (state, { type, payload }) => {
 };
 
 const GameProvider = ({ children }) => {
+	// useReducer takes initState as an arg
+	// rather than the redux convention of setting default state
+	// as a rest parameter on the reducer function itself
 	const [state, dispatch] = useReducer(reducer, initState);
 
 	const providerValue = {
 		state,
 		dispatch,
 		difficultiesLib,
+		progressesLib,
 		PLAYER_GUESSED,
 		PLAYER_REQUESTED_HINT,
 		START_GAME,

@@ -8,6 +8,7 @@ const PlayerButtons = () => {
 		START_GAME,
 		PLAYER_GUESSED,
 		PLAYER_REQUESTED_HINT,
+		progressesLib,
 	} = useContext(GameContext);
 
 	const { selectedSquare } = state || {};
@@ -18,14 +19,16 @@ const PlayerButtons = () => {
 				type='button'
 				id='submit-guess-btn'
 				value='SUBMIT GUESS'
-				onClick={() =>
+				onClick={() => {
+					if (state.currentProgress !== progressesLib.PLAYING) return;
+
 					dispatch({
 						type: PLAYER_GUESSED,
 						payload: {
 							selectedSquare,
 						},
-					})
-				}
+					});
+				}}
 			/>
 			<input
 				type='button'
@@ -37,7 +40,14 @@ const PlayerButtons = () => {
 				type='button'
 				id='play-again-btn'
 				value='PLAY AGAIN'
-				onClick={() => dispatch({ type: START_GAME })}
+				onClick={() =>
+					dispatch({
+						type: START_GAME,
+						payload: {
+							difficulty: state.difficulty,
+						},
+					})
+				}
 			/>
 		</div>
 	);
