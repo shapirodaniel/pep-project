@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from './context/game';
 
-const Winstreak = ({ winstreak }) => {
-	return <div className='winstreak'>Current Win Streak: {winstreak}</div>;
+const Winstreak = () => {
+	const { state } = useContext(GameContext);
+
+	return (
+		<div className='winstreak'>
+			Current Win Streak: {state.currentWinstreak}
+		</div>
+	);
 };
 
 export default Winstreak;
