@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from './context/game';
 
-const RemainingGuesses = ({ remainingGuesses }) => {
+const RemainingGuesses = () => {
+	const { state } = useContext(GameContext);
+
 	return (
 		<div className='remaining-guesses'>
-			Remaining Guesses: {remainingGuesses}
+			Remaining Guesses: {state.maxGuesses - state.pastGuesses.length}
 		</div>
 	);
 };

@@ -48,20 +48,22 @@ const playerMessagesLib = {
 };
 
 const initState = {
-	difficulty: '',
+	difficulty: 'EASY',
 	pastGuesses: [],
 	winningNumber: 0,
 	currentHints: [],
-	maxGuesses: 0,
-	numHints: 0,
+	maxGuesses: 5,
+	numHints: 5,
 	selectedSquare: 0,
 	currentProgress: progressesLib.PLAYING,
 	playerMessage: playerMessagesLib.START_MESSAGE,
+	currentWinstreak: 0,
 };
 
 const START_GAME = 'START_GAME';
 const PLAYER_GUESSED = 'PLAYER_GUESSED';
 const PLAYER_REQUESTED_HINT = 'PLAYER_REQUESTED_HINT';
+const SELECT_NEW_SQUARE = 'SELECT_NEW_SQUARE';
 
 const getPlayerMessage = (guess, winner) => {
 	if (guess === winner) return playerMessagesLib.YOU_WIN;
@@ -80,7 +82,7 @@ const getPlayerMessage = (guess, winner) => {
 	}
 };
 
-const reducer = (state = initState, { type, payload }) => {
+const reducer = (state, { type, payload }) => {
 	switch (type) {
 		// payload: { difficulty: /* the current difficulty constant */}
 		case START_GAME: {
@@ -91,16 +93,29 @@ const reducer = (state = initState, { type, payload }) => {
 				maxGuesses: guessesLib[payload.difficulty],
 				numHints: hintsLib[payload.difficulty],
 				currentProgress: progressesLib.PLAYING,
+
+				// store winstreak in local storage
+				currentWinstreak: localStorage.getItem('winstreak'),
+			};
+		}
+
+		case SELECT_NEW_SQUARE: {
+			return {
+				...state,
+				selectedSquare: payload.selectedSquare,
 			};
 		}
 
 		case PLAYER_GUESSED: {
 			// if player has won
 			if (payload.selectedSquare === state.winningNumber) {
+				localStorage.setItem('winstreak', ++state.currentWinstreak);
+
 				return {
 					...state,
 					currentProgress: progressesLib.WON,
 					playerMessage: playerMessagesLib.YOU_WIN,
+					currentWinstreak: localStorage.getItem('winstreak'),
 				};
 			}
 
@@ -123,10 +138,13 @@ const reducer = (state = initState, { type, payload }) => {
 
 			// if lost
 			if (newState.pastGuesses.length === newState.maxGuesses) {
+				localStorage.setItem('winstreak', 0);
+
 				return {
 					...newState,
 					currentProgress: progressesLib.LOST,
 					playerMessage: playerMessagesLib.YOU_LOSE,
+					currentWinstreak: 0,
 				};
 			}
 
@@ -147,7 +165,7 @@ const reducer = (state = initState, { type, payload }) => {
 			}
 
 			// if player has no hints left
-			if (state.maxGuesses - payload.pastGuesses.length === 1) {
+			if (state.maxGuesses - state.pastGuesses.length === 1) {
 				return {
 					...state,
 					playerMessage: playerMessagesLib.NOT_ENOUGH_GUESSES_LEFT,
@@ -155,19 +173,19 @@ const reducer = (state = initState, { type, payload }) => {
 			}
 
 			// otherwise, generate new hints
-			let newHints = new Array(difficultiesLib[payload.difficulty])
+			let newHints = new Array(difficultiesLib[state.difficulty])
 				.fill(null)
 				.map(() => Math.ceil(Math.random() * 100));
 
 			// include the winning number if not already present
-			if (!newHints.includes(payload.winningNumber))
-				newHints[0] = payload.winningNumber;
+			if (!newHints.includes(state.winningNumber))
+				newHints[0] = state.winningNumber;
 
 			return {
 				...state,
 				currentHints: newHints,
 				playerMessage: playerMessagesLib.CLEAR_MESSAGE,
-				pastGuesses: [...payload.pastGuesses, null],
+				pastGuesses: [...state.pastGuesses, null],
 			};
 		}
 
@@ -177,7 +195,7 @@ const reducer = (state = initState, { type, payload }) => {
 };
 
 const GameProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer);
+	const [state, dispatch] = useReducer(reducer, initState);
 
 	const providerValue = {
 		state,
@@ -186,6 +204,7 @@ const GameProvider = ({ children }) => {
 		PLAYER_GUESSED,
 		PLAYER_REQUESTED_HINT,
 		START_GAME,
+		SELECT_NEW_SQUARE,
 	};
 
 	return (

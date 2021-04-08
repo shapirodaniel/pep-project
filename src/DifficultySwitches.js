@@ -8,14 +8,15 @@ const DifficultySwitch = ({ level }) => {
 		<div
 			className='difficulty-switch-box'
 			onClick={() =>
-				dispatch({ ...state, difficulty: level, type: START_GAME })
+				dispatch({
+					type: START_GAME,
+					payload: { difficulty: level },
+				})
 			}
 		>
 			<div
 				className={
-					state && state.difficulty === level
-						? 'checkbox active'
-						: 'checkbox'
+					state.difficulty === level ? 'checkbox active' : 'checkbox'
 				}
 			>
 				<div className='checkmark'></div>

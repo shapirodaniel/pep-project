@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { GameContext } from './context/game';
 
 const UserGuess = () => {
-	const { selectedSquare } = useContext(GameContext);
+	const { state } = useContext(GameContext);
 
 	return (
 		<div className='guess-wrapper'>
 			<label htmlFor='user-guess'>Your Guess:</label>
 			<div className='user-guess'>
-				{!selectedSquare ? '' : selectedSquare}
+				{!state.selectedSquare ? '' : state.selectedSquare}
 			</div>
 		</div>
 	);

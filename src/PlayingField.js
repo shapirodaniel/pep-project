@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { GameContext } from './context/game';
 
 const Row = ({ scalar }) => {
-	const { selectedSquare, setSelectedSquare } = useContext(GameContext);
+	const { state, dispatch, SELECT_NEW_SQUARE } = useContext(GameContext);
 
 	const pattern = () => {
 		return (scalar / 10) % 2 === 0
@@ -22,11 +22,18 @@ const Row = ({ scalar }) => {
 						key={idx}
 						className={
 							(idx % 2 === 0 ? oddSquare : evenSquare) +
-							(selectedSquare === squareValue
+							(state.selectedSquare === squareValue
 								? ' currentChoice'
 								: '')
 						}
-						onClick={e => setSelectedSquare(+e.target.innerText)}
+						onClick={e => {
+							dispatch({
+								type: SELECT_NEW_SQUARE,
+								payload: {
+									selectedSquare: +e.target.innerText,
+								},
+							});
+						}}
 					>
 						{squareValue}
 					</span>
