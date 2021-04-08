@@ -13,8 +13,6 @@ const PlayerButtons = () => {
 
 	const { selectedSquare } = state || {};
 
-	console.log(state);
-
 	return (
 		<div className='button-wrapper'>
 			<input
@@ -23,7 +21,6 @@ const PlayerButtons = () => {
 				value='SUBMIT GUESS'
 				onClick={() => {
 					if (state.currentProgress !== progressesLib.PLAYING) return;
-
 					dispatch({
 						type: PLAYER_GUESSED,
 						payload: {
@@ -36,7 +33,10 @@ const PlayerButtons = () => {
 				type='button'
 				id='hint-btn'
 				value='GET A HINT'
-				onClick={() => dispatch({ type: PLAYER_REQUESTED_HINT })}
+				onClick={() => {
+					if (state.currentProgress !== progressesLib.PLAYING) return;
+					dispatch({ type: PLAYER_REQUESTED_HINT });
+				}}
 			/>
 			<input
 				type='button'

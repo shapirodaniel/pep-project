@@ -120,6 +120,7 @@ const reducer = (state, { type, payload }) => {
 		case SELECT_NEW_SQUARE: {
 			return {
 				...state,
+				currentHints: [],
 				selectedSquare: payload.selectedSquare,
 			};
 		}
@@ -129,6 +130,7 @@ const reducer = (state, { type, payload }) => {
 			if (!payload.selectedSquare)
 				return {
 					...state,
+					currentHints: [],
 					playerMessage: playerMessagesLib.PLEASE_CHOOSE_A_SQUARE,
 				};
 

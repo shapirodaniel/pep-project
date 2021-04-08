@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { GameContext } from './context/game';
 
 const Row = ({ scalar }) => {
-	const { state, dispatch, SELECT_NEW_SQUARE } = useContext(GameContext);
+	const { state, dispatch, progressesLib, SELECT_NEW_SQUARE } = useContext(
+		GameContext
+	);
 
 	const pattern = () => {
 		return (scalar / 10) % 2 === 0
@@ -17,17 +19,45 @@ const Row = ({ scalar }) => {
 
 				const squareValue = idx + 1 + scalar;
 
+				const getClassName = () => {
+					const squareType = idx % 2 === 0 ? oddSquare : evenSquare;
+
+					const modifier = (() => {
+						const won =
+							state.currentProgress === progressesLib.WON &&
+							squareValue === state.winningNumber;
+
+						const lost =
+							state.currentProgress === progressesLib.LOST &&
+							squareValue === state.winningNumber;
+
+						const currentChoice =
+							state.selectedSquare === squareValue &&
+							state.currentProgress === progressesLib.PLAYING;
+
+						const hint = state.currentHints.includes(squareValue);
+
+						switch (true) {
+							case won:
+								return ' won';
+							case lost:
+								return ' lost';
+							case currentChoice:
+								return ' currentChoice';
+							case hint:
+								return ' hint';
+							default:
+								return '';
+						}
+					})();
+
+					return squareType + modifier;
+				};
+
 				return (
 					<span
 						key={idx}
-						className={
-							(idx % 2 === 0 ? oddSquare : evenSquare) +
-							(state.selectedSquare === squareValue
-								? ' currentChoice'
-								: state.currentHints.includes(squareValue)
-								? ' hint'
-								: '')
-						}
+						className={getClassName()}
 						onClick={e => {
 							dispatch({
 								type: SELECT_NEW_SQUARE,
