@@ -157,10 +157,7 @@ const reducer = (state, { type, payload }) => {
 			}
 
 			// otherwise, keep playing
-			return {
-				...newState,
-				playerMessage: playerMessagesLib.CLEAR_MESSAGE,
-			};
+			return newState;
 		}
 
 		case PLAYER_REQUESTED_HINT: {
