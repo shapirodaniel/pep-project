@@ -218,7 +218,7 @@ function clickHandler(e) {
 }
 ```
 
-If we dig in to `clickHandler` we see that there are essentially two kinds of clickable DOM elements our users will interact with during the course of the guessing game: difficulty switches that set the current difficulty level and game-play buttons that generate hints, submit user guesses, and reset the game. What if we had a way of separating the <strong>game logic</strong> from <strong>DOM elements themselves</strong> so that we could reason about them separately? And what if anything would we gain from separating concerns in this way? Let's refactor `clickHandler` by pulling the state logic out, sending the mechanical information ("when the user clicks X, Y happens") to React components and letting them receive state updates from a single source of truth. There are several state management systems available to the React ecosystem, and given our modest needs, React's Context API is a great fit.
+What if we had a way of separating the <strong>game logic</strong> from <strong>DOM elements themselves</strong> so that we could reason about them separately? And what if anything would we gain from separating concerns in this way? Let's refactor `clickHandler` by pulling the state logic out, sending the mechanical information ("when the user clicks X, Y happens") to React components and letting them receive state updates from a single source of truth. There are several state management systems available to the React ecosystem, and given our modest needs, React's Context API is a great fit.
 
 ## React Context API
 
